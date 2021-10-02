@@ -2,20 +2,34 @@ import dayjs from "dayjs"
 
 export class BudgetService {
   query(start, end) {
-    // let fakeDays =(start, end)=> [
-    //   {yearMonth: '202110', days: 31}
-    // ]
     let startDay = dayjs(start)
     let endDay = dayjs(end)
-    let isInvalidDate = !endDay.isAfter(startDay)
-    if (isInvalidDate) {
+    if (endDay.isBefore(startDay)) {
       return 0
     }
-    return this.getFullMonthAmount(startDay.format("YYYYMM")) / startDay.daysInMonth() * (endDay.diff(startDay, "day") + 1) || 0
-    // return this.getFullMonthAmount(startDay.format("YYYYMM")) || 0
+    if (startDay.isSame(endDay, "month")) {
+      return this.getDaysAmount(startDay, endDay)
+    }
+    let sum = 0
+    for (let i = startDay.startOf("month");
+         i.isBefore(endDay.add(1, 'month').startOf('month'));
+         i = i.add(1, "month")) {
+      if (i.isSame(startDay, "month")) {
+        sum += this.getDaysAmount(startDay, startDay.endOf("month"))
+      } else if (i.isSame(endDay, "month")) {
+        sum += this.getDaysAmount(endDay.startOf("month"), endDay)
+      } else {
+        sum += this.getFullMonthAmount(i.format("YYYYMM"))
+      }
+    }
+    return sum
+  }
+
+  getDaysAmount(startDay, endDay) {
+    return this.getFullMonthAmount(startDay.format("YYYYMM")) / startDay.daysInMonth() * (endDay.diff(startDay, "day") + 1)
   }
 
   getFullMonthAmount(month) {
-    return this.getAll()?.find(element => element.yearMonth === month)?.amount
+    return this.getAll()?.find(element => element.yearMonth === month)?.amount || 0
   }
 }
