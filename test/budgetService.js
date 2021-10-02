@@ -1,11 +1,11 @@
+import dayjs from "dayjs"
+
 export class BudgetService {
   query(start, end) {
-    if (start === "2021-10-01" && end === "2021-10-31") {
-      // let fakeDays =(start, end)=> [
-      //   {yearMonth: '202110', days: 31}
-      // ]
-      return this.getAll()[0].amount
-    }
-    return 0
+    // let fakeDays =(start, end)=> [
+    //   {yearMonth: '202110', days: 31}
+    // ]
+    let startDay = dayjs(start).format("YYYYMM")
+    return this.getAll()?.find(element => element.yearMonth === startDay)?.amount || 0
   }
 }
