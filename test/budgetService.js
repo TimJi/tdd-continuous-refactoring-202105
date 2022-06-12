@@ -35,15 +35,19 @@ export class BudgetService {
         ?.find(element => element.yearMonth === month));
       if (budget) {
         if (currentMonth.isSame(startDay, 'month')) {
-          sum += (budget.amount || 0) / budget.totalDays() * (startDay.endOf('month')
+          sum += this.dailyAmount(budget) * (startDay.endOf('month')
             .diff(startDay, 'day') + 1)
         } else if (currentMonth.isSame(endDay, 'month')) {
-          sum += (budget.amount || 0) / budget.totalDays() * (endDay.diff(endDay.startOf('month'), 'day') + 1)
+          sum += this.dailyAmount(budget) * (endDay.diff(endDay.startOf('month'), 'day') + 1)
         } else {
           sum += budget.amount || 0
         }
       }
     }
     return sum
+  }
+
+  dailyAmount(budget) {
+    return (budget.amount || 0) / budget.totalDays();
   }
 }
