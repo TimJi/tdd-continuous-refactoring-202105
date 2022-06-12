@@ -34,12 +34,11 @@ export class BudgetService {
       let budget = Budget.from(this.getAll()
         ?.find(element => element.yearMonth === month));
       if (budget) {
-        let daysOfBudget = budget.totalDays();
         if (currentMonth.isSame(startDay, 'month')) {
-          sum += (budget.amount || 0) / daysOfBudget * (startDay.endOf('month')
+          sum += (budget.amount || 0) / budget.totalDays() * (startDay.endOf('month')
             .diff(startDay, 'day') + 1)
         } else if (currentMonth.isSame(endDay, 'month')) {
-          sum += (budget.amount || 0) / daysOfBudget * (endDay.diff(endDay.startOf('month'), 'day') + 1)
+          sum += (budget.amount || 0) / budget.totalDays() * (endDay.diff(endDay.startOf('month'), 'day') + 1)
         } else {
           sum += budget.amount || 0
         }
