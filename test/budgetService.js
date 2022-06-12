@@ -7,6 +7,11 @@ class Budget {
     }
     return null;
   }
+
+  totalDays() {
+    let firstDay = dayjs(this.yearMonth + '01', 'yyyyMMdd');
+    return firstDay.daysInMonth();
+  }
 }
 
 export class BudgetService {
@@ -29,7 +34,7 @@ export class BudgetService {
       let budget = Budget.from(this.getAll()
         ?.find(element => element.yearMonth === month));
       if (budget) {
-        let daysOfBudget = currentMonth.daysInMonth();
+        let daysOfBudget = budget.totalDays();
         if (currentMonth.isSame(startDay, 'month')) {
           sum += (budget.amount || 0) / daysOfBudget * (startDay.endOf('month')
             .diff(startDay, 'day') + 1)
