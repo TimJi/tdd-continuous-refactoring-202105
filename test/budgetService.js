@@ -11,15 +11,15 @@ export class BudgetService {
       return this.getFullMonthAmount(startDay.format("YYYYMM")) / startDay.daysInMonth() * (endDay.diff(startDay, "day") + 1)
     }
     let sum = 0
-    for (let i = startDay.startOf("month");
-         i.isBefore(endDay.add(1, 'month').startOf('month'));
-         i = i.add(1, "month")) {
-      if (i.isSame(startDay, "month")) {
-        sum += this.getFullMonthAmount(i.format("YYYYMM")) / i.daysInMonth() * (startDay.endOf("month").diff(startDay, "day") + 1)
-      } else if (i.isSame(endDay, "month")) {
-        sum += this.getFullMonthAmount(i.format("YYYYMM")) / i.daysInMonth() * (endDay.diff(endDay.startOf("month"), "day") + 1)
+    for (let currentMonth = startDay.startOf("month");
+         currentMonth.isBefore(endDay.add(1, 'month').startOf('month'));
+         currentMonth = currentMonth.add(1, "month")) {
+      if (currentMonth.isSame(startDay, "month")) {
+        sum += this.getFullMonthAmount(currentMonth.format("YYYYMM")) / currentMonth.daysInMonth() * (startDay.endOf("month").diff(startDay, "day") + 1)
+      } else if (currentMonth.isSame(endDay, "month")) {
+        sum += this.getFullMonthAmount(currentMonth.format("YYYYMM")) / currentMonth.daysInMonth() * (endDay.diff(endDay.startOf("month"), "day") + 1)
       } else {
-        sum += this.getFullMonthAmount(i.format("YYYYMM"))
+        sum += this.getFullMonthAmount(currentMonth.format("YYYYMM"))
       }
     }
     return sum
