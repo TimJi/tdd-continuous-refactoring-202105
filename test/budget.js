@@ -12,4 +12,8 @@ export class Budget {
     let firstDay = dayjs(this.yearMonth + '01', 'yyyyMMdd');
     return firstDay.daysInMonth();
   }
+
+  dailyAmount() {
+    return (this.amount || 0) / this.totalDays();
+  }
 }
