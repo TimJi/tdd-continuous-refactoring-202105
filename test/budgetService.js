@@ -14,12 +14,13 @@ export class BudgetService {
     for (let currentMonth = startDay.startOf("month");
          currentMonth.isBefore(endDay.add(1, 'month').startOf('month'));
          currentMonth = currentMonth.add(1, "month")) {
+      let month = currentMonth.format("YYYYMM");
       if (currentMonth.isSame(startDay, "month")) {
-        sum += this.getFullMonthAmount(currentMonth.format("YYYYMM")) / currentMonth.daysInMonth() * (startDay.endOf("month").diff(startDay, "day") + 1)
+        sum += this.getFullMonthAmount(month) / currentMonth.daysInMonth() * (startDay.endOf("month").diff(startDay, "day") + 1)
       } else if (currentMonth.isSame(endDay, "month")) {
-        sum += this.getFullMonthAmount(currentMonth.format("YYYYMM")) / currentMonth.daysInMonth() * (endDay.diff(endDay.startOf("month"), "day") + 1)
+        sum += this.getFullMonthAmount(month) / currentMonth.daysInMonth() * (endDay.diff(endDay.startOf("month"), "day") + 1)
       } else {
-        sum += this.getFullMonthAmount(currentMonth.format("YYYYMM"))
+        sum += this.getFullMonthAmount(month)
       }
     }
     return sum
