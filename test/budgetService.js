@@ -1,5 +1,14 @@
 import dayjs from 'dayjs'
 
+class Budget {
+  static from(json) {
+    if (json) {
+      return Object.assign(new Budget(), json);
+    }
+    return null;
+  }
+}
+
 export class BudgetService {
   query(start, end) {
     let startDay = dayjs(start)
@@ -17,8 +26,8 @@ export class BudgetService {
         .startOf('month'));
       currentMonth = currentMonth.add(1, 'month')) {
       let month = currentMonth.format('YYYYMM');
-      let budget = this.getAll()
-        ?.find(element => element.yearMonth === month);
+      let budget = Budget.from(this.getAll()
+        ?.find(element => element.yearMonth === month));
       if (budget) {
         let daysOfBudget = currentMonth.daysInMonth();
         if (currentMonth.isSame(startDay, 'month')) {
