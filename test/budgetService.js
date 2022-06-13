@@ -15,16 +15,21 @@ export class BudgetService {
     }
     let sum = 0
     let period = new Period(startDay, endDay);
-    for (let currentMonth = startDay.startOf('month');
-      currentMonth.isBefore(endDay.add(1, 'month')
-        .startOf('month'));
-      currentMonth = currentMonth.add(1, 'month')) {
-      let budget = Budget.from(this.getAll()
-        ?.find(element => element.yearMonth === currentMonth.format('YYYYMM')));
-      if (budget) {
-        sum += budget.dailyAmount() * period.overlappingDays(budget)
-      }
-    }
+    this.getAll()
+      .forEach(b => {
+        let budget = Budget.from(b)
+        sum += budget.dailyAmount() * period.overlappingDays(budget);
+      })
+    // for (let currentMonth = startDay.startOf('month');
+    //   currentMonth.isBefore(endDay.add(1, 'month')
+    //     .startOf('month'));
+    //   currentMonth = currentMonth.add(1, 'month')) {
+    //   let budget = Budget.from(this.getAll()
+    //     ?.find(element => element.yearMonth === currentMonth.format('YYYYMM')));
+    //   if (budget) {
+    //     sum += budget.dailyAmount() * period.overlappingDays(budget)
+    //   }
+    // }
     return sum
   }
 }
