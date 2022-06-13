@@ -18,9 +18,8 @@ export class BudgetService {
       currentMonth.isBefore(endDay.add(1, 'month')
         .startOf('month'));
       currentMonth = currentMonth.add(1, 'month')) {
-      let month = currentMonth.format('YYYYMM');
       let budget = Budget.from(this.getAll()
-        ?.find(element => element.yearMonth === month));
+        ?.find(element => element.yearMonth === currentMonth.format('YYYYMM')));
       if (budget) {
         let period = new Period(startDay, endDay);
         sum += budget.dailyAmount() * period.overlappingDays(budget)
