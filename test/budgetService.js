@@ -4,10 +4,8 @@ import { Period } from './period';
 
 export class BudgetService {
   query(start, end) {
-    let startDay = dayjs(start)
-    let endDay = dayjs(end)
     let sum = 0
-    let period = new Period(startDay, endDay);
+    let period = new Period(dayjs(start), dayjs(end));
     this.getAll()
       .forEach(b => {
         let budget = Budget.from(b)
