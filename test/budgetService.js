@@ -23,7 +23,6 @@ export class BudgetService {
       if (budget) {
         let overlappingEnd;
         let overlappingStart;
-        let overlappingDays;
         if (currentMonth.isSame(startDay, 'month')) {
           overlappingEnd = budget.lastDay();
           overlappingStart = startDay;
@@ -34,7 +33,7 @@ export class BudgetService {
           overlappingEnd = budget.lastDay();
           overlappingStart = budget.firstDay();
         }
-        overlappingDays = overlappingEnd.diff(overlappingStart, 'day') + 1;
+        let overlappingDays = overlappingEnd.diff(overlappingStart, 'day') + 1;
         sum += budget.dailyAmount() * overlappingDays
       }
     }
