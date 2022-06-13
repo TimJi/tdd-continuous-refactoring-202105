@@ -32,7 +32,10 @@ export class BudgetService {
           let overlappingDays = overlappingEnd.diff(overlappingStart, 'day') + 1;
           sum += budget.dailyAmount() * overlappingDays
         } else {
-          sum += budget.amount || 0
+          let overlappingEnd = budget.lastDay();
+          let overlappingStart = budget.firstDay();
+          let overlappingDays = overlappingEnd.diff(overlappingStart, 'day') + 1;
+          sum += budget.dailyAmount() * overlappingDays
         }
       }
     }
