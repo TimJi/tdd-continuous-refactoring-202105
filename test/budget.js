@@ -9,8 +9,17 @@ export class Budget {
   }
 
   totalDays() {
-    let firstDay = dayjs(this.yearMonth + '01', 'yyyyMMdd');
-    return firstDay.daysInMonth();
+    return this.firstDay()
+      .daysInMonth();
+  }
+
+  firstDay() {
+    return dayjs(this.yearMonth + '01', 'yyyyMMdd');
+  }
+
+  lastDay() {
+    return this.firstDay()
+      .endOf('month');
   }
 
   dailyAmount() {

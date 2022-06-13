@@ -22,11 +22,14 @@ export class BudgetService {
         ?.find(element => element.yearMonth === month));
       if (budget) {
         if (currentMonth.isSame(startDay, 'month')) {
-          let overlappingDays = startDay.endOf('month')
-            .diff(startDay, 'day') + 1;
+          let overlappingEnd = budget.lastDay();
+          let overlappingStart = startDay;
+          let overlappingDays = overlappingEnd.diff(overlappingStart, 'day') + 1;
           sum += budget.dailyAmount() * overlappingDays
         } else if (currentMonth.isSame(endDay, 'month')) {
-          let overlappingDays = endDay.diff(endDay.startOf('month'), 'day') + 1;
+          let overlappingEnd = endDay;
+          let overlappingStart = endDay.startOf('month');
+          let overlappingDays = overlappingEnd.diff(overlappingStart, 'day') + 1;
           sum += budget.dailyAmount() * overlappingDays
         } else {
           sum += budget.amount || 0
