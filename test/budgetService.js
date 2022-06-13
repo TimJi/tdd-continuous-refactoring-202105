@@ -11,8 +11,12 @@ export class BudgetService {
     this.getAll()
       .forEach(b => {
         let budget = Budget.from(b)
-        sum += budget.dailyAmount() * period.overlappingDays(budget);
+        sum += this.overlappingAmount(budget, period);
       })
     return sum
+  }
+
+  overlappingAmount(budget, period) {
+    return budget.dailyAmount() * period.overlappingDays(budget);
   }
 }
