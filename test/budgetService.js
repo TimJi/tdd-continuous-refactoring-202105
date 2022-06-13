@@ -6,10 +6,8 @@ export class BudgetService {
   query(start, end) {
     let period = new Period(dayjs(start), dayjs(end));
     return this.getAll()
-      .map(b => {
-        let budget = Budget.from(b)
-        return budget.overlappingAmount(period);
-      })
+      .map(b => Budget.from(b)
+        .overlappingAmount(period))
       .reduce((a, b) => a + b, 0);
   }
 }
