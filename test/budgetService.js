@@ -6,9 +6,6 @@ export class BudgetService {
   query(start, end) {
     let startDay = dayjs(start)
     let endDay = dayjs(end)
-    if (endDay.isBefore(startDay)) {
-      return 0
-    }
     let sum = 0
     let period = new Period(startDay, endDay);
     this.getAll()
