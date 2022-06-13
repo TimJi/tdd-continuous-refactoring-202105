@@ -40,6 +40,8 @@ export class BudgetService {
 
   overlappingDays(budget, startDay, endDay) {
     let period = new Period(startDay, endDay);
+    startDay = period.startDay;
+    endDay = period.endDay;
     let overlappingEnd;
     let overlappingStart;
     if (budget.firstDay()
